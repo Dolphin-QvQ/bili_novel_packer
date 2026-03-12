@@ -183,6 +183,9 @@ class NovelPacker {
     Console.write("开始打包 ${volume.volumeName}...\n");
     EpubPacker packer = EpubPacker(_getEpubName(volume));
     packer.docTitle = "${volume.catalog.novel.title} ${volume.volumeName}";
+    if (volume.volumeName.startsWith(volume.catalog.novel.title)) {
+      packer.docTitle = volume.volumeName;
+    }
     packer.creator = volume.catalog.novel.author;
     packer.source = novel.url;
     packer.publisher = novel.publisher;
@@ -303,6 +306,9 @@ class NovelPacker {
     String volumeName = _sanitizeFileName(volume.volumeName);
     if (volumeName == "") {
       return "$title${Platform.pathSeparator}$title.epub";
+    }
+    if (volumeName.startsWith(title)) {
+      return "$title${Platform.pathSeparator}$volumeName.epub";
     }
     return "$title${Platform.pathSeparator}$title $volumeName.epub";
   }
