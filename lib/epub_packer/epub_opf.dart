@@ -30,6 +30,16 @@ class EpubOpenPackageFormat implements EpubNode {
     manifest.cover = cover;
   }
 
+  String? get calibreSeries => metaData.calibreSeries;
+
+  set calibreSeries(String? calibreSeries) =>
+      metaData.calibreSeries = calibreSeries;
+
+  num? get calibreSeriesIndex => metaData.calibreSeriesIndex;
+
+  set calibreSeriesIndex(num? calibreSeriesIndex) =>
+      metaData.calibreSeriesIndex = calibreSeriesIndex;
+
   EpubOpenPackageFormat() {
     metaData = MetaData(_builder);
     manifest = Manifest(_builder);
@@ -83,6 +93,9 @@ class MetaData extends EpubChildNode {
   late String docTitle;
   late String creator;
 
+  String? calibreSeries;
+  num? calibreSeriesIndex;
+
   @override
   void build() {
     builder.element("metadata", nest: () {
@@ -115,6 +128,18 @@ class MetaData extends EpubChildNode {
           "content": "cover-image",
         },
       );
+      if (calibreSeries != null) {
+        builder.element("meta", attributes: {
+          "name": "calibre:series",
+          "content": calibreSeries!,
+        });
+      }
+      if (calibreSeriesIndex != null) {
+        builder.element("meta", attributes: {
+          "name": "calibre:series_index",
+          "content": calibreSeriesIndex!.toString(),
+        });
+      }
     });
   }
 }

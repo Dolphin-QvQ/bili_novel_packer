@@ -12,6 +12,7 @@ import 'package:bili_novel_packer/light_novel/bili_novel/bili_novel_source.dart'
 import 'package:bili_novel_packer/light_novel/wenku_novel/wenku_novel_source.dart';
 import 'package:bili_novel_packer/log.dart';
 import 'package:bili_novel_packer/pack_argument.dart';
+import 'package:bili_novel_packer/util/volume_util.dart';
 import 'package:bili_novel_packer/util/html_util.dart';
 import 'package:bili_novel_packer/util/sequence.dart';
 import 'package:console/console.dart';
@@ -191,6 +192,11 @@ class NovelPacker {
     packer.publisher = novel.publisher;
     packer.subjects = novel.tags ?? [];
     packer.description = novel.description;
+    // 当识别出丛书编号时才设置丛书名 否则丛书编号会被当成1
+    packer.calibreSeriesIndex = VolumeUtil.getSeriesIndex(volume.volumeName);
+    if (packer.calibreSeriesIndex != null) {
+      packer.calibreSeries = volume.catalog.novel.title;
+    }
 
     LightNovelCoverDetector detector = LightNovelCoverDetector();
 

@@ -68,6 +68,16 @@ class EpubPacker {
 
   set cover(String? id) => _opf.cover = id;
 
+  String? get calibreSeries => _opf.calibreSeries;
+
+  set calibreSeries(String? calibreSeries) =>
+      _opf.calibreSeries = calibreSeries;
+
+  num? get calibreSeriesIndex => _opf.calibreSeriesIndex;
+
+  set calibreSeriesIndex(num? calibreSeriesIndex) =>
+      _opf.calibreSeriesIndex = calibreSeriesIndex;
+
   EpubPacker(this.epubFilePath);
 
   /// 向EPUB中添加文件
